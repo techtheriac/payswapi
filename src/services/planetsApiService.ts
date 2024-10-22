@@ -74,7 +74,7 @@ export async function getPlanetById(id: string): Promise<ApiResponse<Planet>> {
   ) {
     return {
       success: false,
-      error: { message: "unable to spool person meta data" },
+      error: { message: "unable to spool planets metadata" },
     };
   }
 

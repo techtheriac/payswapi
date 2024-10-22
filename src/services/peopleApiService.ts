@@ -99,7 +99,7 @@ export async function getPeopleById(
     ) {
       return {
         success: false,
-        error: { message: "unable to spool person meta data" },
+        error: { message: "unable to spool person metadata" },
       };
     }
 
