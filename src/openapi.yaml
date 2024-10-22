@@ -1,0 +1,109 @@
+openapi: 3.1.0
+info:
+  title: PaySwapi
+  version: 1.0.0
+  description: API documentation for PaySwapi endpoints
+servers:
+  - url: http://localhost:3001
+    description: Local development server
+paths:
+  /api/people:
+    get:
+      summary: Get all PaySwapi people
+      description: Retrieve a list folks existing in the PaySwapi universe.
+      responses:
+        "200":
+          description: List of PaySwapis
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Person"
+  /api/people/id:
+    get:
+      summary: Get on PaySwapi person by id
+      description: Retrieves a single folk from the PaySwapi universe.
+      responses:
+        "200":
+          description: One PaySwapi folk
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: "#/components/schemas/Person"
+components:
+  schemas:
+    Person:
+      type: object
+      properties:
+        birth_year:
+          type: string
+          example: 112BBY
+        eye_color:
+          type: string
+          example: yellow
+        gender:
+          type: string
+          example: male
+        hair_color:
+          type: string
+          example: red
+        height:
+          type: string
+          example: 96
+        homeworld:
+          type: string
+          example: Naboo
+        vehicles:
+          type: array
+          items:
+            type: string
+        mass:
+          type: string
+          example: 89
+        name:
+          type: string
+          example: Leila Ash
+        skin_color:
+          type: string
+          example: light
+    Planet:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Alderaan
+        climate:
+          type: string
+          example: temprate
+        diameter:
+          type: string
+          example: 12500
+        gravity:
+          type: string
+          example: 1 standard
+        orbital_period:
+          type: string
+          exmaple: 364
+        population:
+          type: string
+          example: 2000000000
+        rotation_period:
+          type: string
+          example: 24
+        surface_water:
+          type: string
+          example: 40
+        terrain:
+          type: string
+          example: grasslands, mountains
+        films:
+          type: array
+          items:
+            type: string
+        residents:
+          type: array
+          items:
+            type: string
