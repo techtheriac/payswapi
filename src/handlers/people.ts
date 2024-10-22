@@ -20,7 +20,7 @@ export const getAllPersons = async (req: Request, res: Response) => {
 
   if (!response.success) {
     res.status(response.status);
-    res.json(response);
+    res.json(response.error);
     return;
   }
 
@@ -43,7 +43,7 @@ export const getOnePerson = async (req: Request, res: Response) => {
 
   if (!response.success) {
     res.status(response.status);
-    res.json(response);
+    res.json(response.error);
     return;
   }
 
