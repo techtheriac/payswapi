@@ -1,19 +1,19 @@
 import { Router } from "express";
-import { getOne, getAll } from "./handlers/people";
-import { getPlanetById, getPlanets } from "./handlers/planets";
+import { getOnePerson, getAllPersons } from "./handlers/people";
+import { getAllPlanets, getOnePlanet } from "./handlers/planets";
 
 const router = Router();
 
 /**
  * People
  */
-router.get("/people", getAll);
-router.get("/people/:id", getOne);
+router.get("/people", getAllPersons);
+router.get("/people/:id", getOnePerson);
 
 /**
  * Planets
  */
-router.get("/planets", getPlanets);
-router.get("/planets/:id", getPlanetById);
+router.get("/planets", getAllPlanets);
+router.get("/planets/:id", getOnePlanet);
 
 export default router;

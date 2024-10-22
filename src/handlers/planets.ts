@@ -1,12 +1,28 @@
+import { Request, Response } from "express";
+import { getPlanetById, getPlanets } from "../services/planetsApiService";
 import axios from "axios";
-const SWAPI_BASE = process.env.SWAPI_BASE || "https://swapi.dev/api";
 
-export async function getPlanets(): Promise<any> {
-  const request = await axios.get(`${SWAPI_BASE}/planets`);
-  return request.data;
-}
+export const getAllPlanets = async (req: Request, res: Response) => {
+  const response = await getPlanets();
 
-export async function getPlanetById(id: number): Promise<any> {
-  const request = await axios.get(`${SWAPI_BASE}/planets/${id}`);
-  return request.data;
-}
+  if (!response.success) {
+    res.status(401);
+    res.json(response);
+    return;
+  }
+
+  res.json(response);
+};
+
+export const getOnePlanet = async (req: Request, res: Response) => {
+  const id = req.params.id;
+  const response = await getPlanetById(id);
+
+  if (!response.success) {
+    res.status(401);
+    res.json(response);
+    return;
+  }
+
+  res.json(response);
+};

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { getPeople, getPeopleById } from "../services/starwarsApiService";
+import { getPeople, getPeopleById } from "../services/peopleApiService";
 
-export const getAll = async (req: Request, res: Response) => {
+export const getAllPersons = async (req: Request, res: Response) => {
   const response = await getPeople();
 
   if (!response.success) {
@@ -13,8 +13,8 @@ export const getAll = async (req: Request, res: Response) => {
   res.json(response);
 };
 
-export const getOne = async (req: Request, res: Response) => {
-  const id = Number(req.params.id);
+export const getOnePerson = async (req: Request, res: Response) => {
+  const id = req.params.id;
 
   const response = await getPeopleById(id);
 
