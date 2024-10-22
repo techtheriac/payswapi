@@ -2,14 +2,14 @@ openapi: 3.1.0
 info:
   title: PaySwapi
   version: 1.0.0
-  description: API documentation for PaySwapi endpoints
+  description: API documentation for PaySwapi Endpoints
 servers:
   - url: http://localhost:3001
     description: Local development server
 paths:
   /api/people:
     get:
-      summary: Get all PaySwapi people
+      summary: Get all PaySwapi People
       description: Retrieve a list folks existing in the PaySwapi universe.
       responses:
         "200":
@@ -20,9 +20,9 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Person"
-  /api/people/id:
+  /api/people/:id:
     get:
-      summary: Get on PaySwapi person by id
+      summary: Get one PaySwapi person by Id
       description: Retrieves a single folk from the PaySwapi universe.
       responses:
         "200":

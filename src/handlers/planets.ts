@@ -19,14 +19,14 @@ export const getAllPlanets = async (req: Request, res: Response) => {
   const response = await getPlanets();
 
   if (!response.success) {
-    res.status(401);
+    res.status(response.status);
     res.json(response);
     return;
   }
 
-  cache.set(PLANETS_CACHE_KEY, response);
+  cache.set(PLANETS_CACHE_KEY, response.response);
 
-  res.json(response);
+  res.json(response.response);
 };
 
 export const getOnePlanet = async (req: Request, res: Response) => {
@@ -42,11 +42,11 @@ export const getOnePlanet = async (req: Request, res: Response) => {
   const response = await getPlanetById(id);
 
   if (!response.success) {
-    res.status(401);
+    res.status(response.status);
     res.json(response);
     return;
   }
 
-  cache.set(PLANET_CACHE_KEY(id), response);
-  res.json(response);
+  cache.set(PLANET_CACHE_KEY(id), response.response);
+  res.json(response.response);
 };

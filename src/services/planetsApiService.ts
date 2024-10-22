@@ -48,6 +48,7 @@ export async function getPlanets(): Promise<ApiResponse<Planets[]>> {
   return {
     response,
     success: true,
+    status: 200,
   };
 }
 
@@ -57,6 +58,7 @@ export async function getPlanetById(id: string): Promise<ApiResponse<Planet>> {
   if (!res.data) {
     return {
       success: false,
+      status: res.status,
     };
   }
 
@@ -75,6 +77,7 @@ export async function getPlanetById(id: string): Promise<ApiResponse<Planet>> {
     return {
       success: false,
       error: { message: "unable to spool planets metadata" },
+      status: 404,
     };
   }
 
@@ -97,5 +100,6 @@ export async function getPlanetById(id: string): Promise<ApiResponse<Planet>> {
   return {
     success: true,
     response,
+    status: 200,
   };
 }

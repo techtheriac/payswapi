@@ -49,6 +49,7 @@ export async function getPeople(): Promise<ApiResponse<StarwarsPersons[]>> {
     return {
       success: true,
       response,
+      status: res.status,
     };
   } catch (error) {
     console.error(error);
@@ -57,6 +58,7 @@ export async function getPeople(): Promise<ApiResponse<StarwarsPersons[]>> {
       return {
         success: false,
         error: { message: error.message },
+        status: 500,
       };
     }
 
@@ -65,6 +67,7 @@ export async function getPeople(): Promise<ApiResponse<StarwarsPersons[]>> {
       error: {
         message: "an unexpected error occured whilst retrieving people",
       },
+      status: 500,
     };
   }
 }
@@ -78,6 +81,7 @@ export async function getPeopleById(
     if (!res.data) {
       return {
         success: false,
+        status: res.status,
       };
     }
 
@@ -100,6 +104,7 @@ export async function getPeopleById(
       return {
         success: false,
         error: { message: "unable to spool person metadata" },
+        status: 404,
       };
     }
 
@@ -122,6 +127,7 @@ export async function getPeopleById(
     return {
       response,
       success: true,
+      status: 200,
     };
   } catch (error) {
     console.error(error);
@@ -130,6 +136,7 @@ export async function getPeopleById(
       return {
         success: false,
         error: { message: error.message },
+        status: 500,
       };
     }
 
@@ -138,6 +145,7 @@ export async function getPeopleById(
       error: {
         message: "an unexpected error occured whilst retrieving people",
       },
+      status: 500,
     };
   }
 }

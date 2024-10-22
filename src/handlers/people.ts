@@ -19,14 +19,14 @@ export const getAllPersons = async (req: Request, res: Response) => {
   const response = await getPeople();
 
   if (!response.success) {
-    res.status(401);
+    res.status(response.status);
     res.json(response);
     return;
   }
 
-  cache.set(PERSONS_CACHE_KEY, response);
+  cache.set(PERSONS_CACHE_KEY, response.response);
 
-  res.json(response);
+  res.json(response.response);
 };
 
 export const getOnePerson = async (req: Request, res: Response) => {
@@ -42,12 +42,12 @@ export const getOnePerson = async (req: Request, res: Response) => {
   const response = await getPeopleById(id);
 
   if (!response.success) {
-    res.status(401);
+    res.status(response.status);
     res.json(response);
     return;
   }
 
-  cache.set(PERSON_CACHE_KEY(id), response);
+  cache.set(PERSON_CACHE_KEY(id), response.response);
 
-  res.json(response);
+  res.json(response.response);
 };

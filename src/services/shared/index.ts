@@ -16,6 +16,7 @@ export async function getMetaData<T>(
       return {
         success: false,
         error: { message: "you have supplied invalid path(s)" },
+        status: 401,
       };
     }
 
@@ -26,6 +27,7 @@ export async function getMetaData<T>(
     return {
       success: true,
       response: responses?.map((res) => res?.data),
+      status: 200,
     };
   } catch (error) {
     console.error(error);
@@ -34,6 +36,7 @@ export async function getMetaData<T>(
       return {
         success: false,
         error: { message: error.message },
+        status: 500,
       };
     }
 
@@ -42,6 +45,7 @@ export async function getMetaData<T>(
       error: {
         message: "an unexpected error occured whilst retrieving people",
       },
+      status: 500,
     };
   }
 }
