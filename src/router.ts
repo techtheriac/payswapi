@@ -4,9 +4,6 @@ import { getAllPlanets, getOnePlanet } from "./handlers/planets";
 
 const router = Router();
 
-/**
- * People
- */
 router.get("/people", getAllPersons);
 router.get("/people/:id", getOnePerson);
 

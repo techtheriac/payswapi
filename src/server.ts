@@ -1,6 +1,13 @@
 import express, { Request, Response } from "express";
 import router from "./router";
 import { rateLimit } from "express-rate-limit";
+import { apiReference } from "@scalar/express-api-reference";
+import YAML from "yamljs";
+import path from "path";
+
+const specPath = path.join(__dirname, "./openapi.yaml");
+
+const spec = YAML.load(specPath);
 
 const app = express();
 
@@ -12,6 +19,15 @@ const limiter = rateLimit({
 });
 
 app.use(limiter);
+
+app.use(
+  "/reference",
+  apiReference({
+    spec: {
+      content: spec,
+    },
+  })
+);
 
 app.use("/api", router);
 
