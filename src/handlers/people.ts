@@ -1,15 +1,28 @@
-import axios from "axios";
-const SWAPI_BASE = process.env.SWAPI_BASE || "https://swapi.dev/api";
+import { Request, Response } from "express";
+import { getPeople, getPeopleById } from "../services/starwarsApiService";
 
-export async function getPeople(): Promise<any> {
-  const request = await axios.get(`${SWAPI_BASE}/people`);
+export const getAll = async (req: Request, res: Response) => {
+  const response = await getPeople();
 
-  console.log("PEOPLE", request.data);
+  if (!response.success) {
+    res.status(401);
+    res.json(response);
+    return;
+  }
 
-  request.data;
-}
+  res.json(response);
+};
 
-export async function getPeopleById(id: number): Promise<any> {
-  const request = await axios.get(`${SWAPI_BASE}/people/${id}`);
-  return request;
-}
+export const getOne = async (req: Request, res: Response) => {
+  const id = Number(req.params.id);
+
+  const response = await getPeopleById(id);
+
+  if (!response.success) {
+    res.status(401);
+    res.json(response);
+    return;
+  }
+
+  res.json(response);
+};

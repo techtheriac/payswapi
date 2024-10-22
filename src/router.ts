@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getPeople, getPeopleById } from "./handlers/people";
+import { getOne, getAll } from "./handlers/people";
 import { getPlanetById, getPlanets } from "./handlers/planets";
 
 const router = Router();
@@ -7,8 +7,8 @@ const router = Router();
 /**
  * People
  */
-router.get("/people", getPeople);
-router.get("/people/:id", getPeopleById);
+router.get("/people", getAll);
+router.get("/people/:id", getOne);
 
 /**
  * Planets
