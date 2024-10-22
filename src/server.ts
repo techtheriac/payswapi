@@ -35,4 +35,8 @@ app.get("/health", (req: Request, res: Response) => {
   res.send("OK");
 });
 
+app.get("/", (req: Request, res: Response) => {
+  res.redirect("/reference");
+});
+
 export default app;

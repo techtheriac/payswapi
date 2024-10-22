@@ -15,6 +15,7 @@ interface StarwarsPerson {
   homeworld?: string;
   films?: string[];
   vehicles?: string[];
+  starships?: string[];
 }
 
 type StarwarsPersons = Omit<StarwarsPerson, "homeworld" | "films" | "vehicles">;
@@ -26,6 +27,8 @@ interface StarwarsPersonsResponse {
 interface HomeWorldResponse extends MetaData {}
 
 interface VehilclesResponse extends MetaData {}
+
+interface StarshipsResponse extends MetaData {}
 
 export async function getPeople(): Promise<ApiResponse<StarwarsPersons[]>> {
   try {
@@ -90,11 +93,15 @@ export async function getPeopleById(
     ]);
     const vehiclesResponse = getMetaData<VehilclesResponse>(res.data.vehicles);
     const filmsResponse = getMetaData<FilmsResponse>(res.data.films);
+    const starshipsResponse = getMetaData<StarshipsResponse>(
+      res.data.starships
+    );
 
     const metaDataResponses = await Promise.all([
       homeworldResponse,
       vehiclesResponse,
       filmsResponse,
+      starshipsResponse,
     ]);
 
     if (
@@ -108,7 +115,7 @@ export async function getPeopleById(
       };
     }
 
-    const [homeworld, vehicles, films] = metaDataResponses;
+    const [homeworld, vehicles, films, starships] = metaDataResponses;
 
     const response: StarwarsPerson = {
       birth_year: res.data.birth_year,
@@ -122,6 +129,7 @@ export async function getPeopleById(
       mass: res.data.mass,
       name: res.data.name,
       skin_color: res.data.skin_color,
+      starships: starships.response?.map((x) => x.name),
     };
 
     return {
