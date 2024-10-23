@@ -4,6 +4,7 @@ import { rateLimit } from "express-rate-limit";
 import { apiReference } from "@scalar/express-api-reference";
 import YAML from "yamljs";
 import path from "path";
+import { handleCache } from "./middlewares/cache";
 
 const specPath = path.join(__dirname, "./openapi.yaml");
 
@@ -29,7 +30,7 @@ app.use(
   })
 );
 
-app.use("/api", router);
+app.use("/api", handleCache, router);
 
 app.get("/health", (req: Request, res: Response) => {
   res.send("OK");
