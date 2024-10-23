@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ApiResponse } from "../types";
-import { MetaData, getMetaData, handleError } from "./shared";
+import { MetaData, getAdditionalProperties, handleError } from "./shared";
 const SWAPI_BASE = process.env.SWAPI_BASE || "https://swapi.dev/api";
 
 interface Planet {
@@ -71,8 +71,12 @@ export async function getPlanetById(
       };
     }
 
-    const residentsResonse = getMetaData<ResidentsResponse>(res.data.residents);
-    const filmsResponse = getMetaData<FilmsResponse>(res.data.films);
+    const residentsResonse = getAdditionalProperties<ResidentsResponse>(
+      res.data.residents
+    );
+    const filmsResponse = getAdditionalProperties<FilmsResponse>(
+      res.data.films
+    );
 
     const metaDataResponses = await Promise.all([
       residentsResonse,

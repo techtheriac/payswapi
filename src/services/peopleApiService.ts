@@ -1,6 +1,11 @@
 import axios from "axios";
 import { ApiResponse } from "../types";
-import { FilmsResponse, MetaData, getMetaData, handleError } from "./shared";
+import {
+  FilmsResponse,
+  MetaData,
+  getAdditionalProperties,
+  handleError,
+} from "./shared";
 const SWAPI_BASE = process.env.SWAPI_BASE || "https://swapi.dev/api";
 
 interface StarwarsPerson {
@@ -74,12 +79,16 @@ export async function getPeopleById(
       };
     }
 
-    const homeworldResponse = getMetaData<HomeWorldResponse>([
+    const homeworldResponse = getAdditionalProperties<HomeWorldResponse>([
       res.data.homeworld!,
     ]);
-    const vehiclesResponse = getMetaData<VehilclesResponse>(res.data.vehicles);
-    const filmsResponse = getMetaData<FilmsResponse>(res.data.films);
-    const starshipsResponse = getMetaData<StarshipsResponse>(
+    const vehiclesResponse = getAdditionalProperties<VehilclesResponse>(
+      res.data.vehicles
+    );
+    const filmsResponse = getAdditionalProperties<FilmsResponse>(
+      res.data.films
+    );
+    const starshipsResponse = getAdditionalProperties<StarshipsResponse>(
       res.data.starships
     );
 

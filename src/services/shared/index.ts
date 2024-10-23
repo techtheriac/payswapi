@@ -8,7 +8,7 @@ export interface MetaData {
 export interface FilmsResponse {
   title: string;
 }
-export async function getMetaData<T>(
+export async function getAdditionalProperties<T>(
   paths?: string[]
 ): Promise<ApiResponse<T[]> | ApiResponse> {
   try {
@@ -16,7 +16,15 @@ export async function getMetaData<T>(
       return {
         success: false,
         error: { message: "you have supplied invalid path(s)" },
-        status: 401,
+        status: 400,
+      };
+    }
+
+    if (paths.length < 1) {
+      return {
+        success: true,
+        status: 200,
+        response: [],
       };
     }
 
