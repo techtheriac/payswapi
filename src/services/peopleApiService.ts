@@ -1,8 +1,9 @@
 import axios from "axios";
-import { ApiResponse } from "../types";
+import { ApiResponse, QueryParams } from "../types";
 import {
   FilmsResponse,
   MetaData,
+  constructQuery,
   getAdditionalProperties,
   handleError,
 } from "./shared";
@@ -35,13 +36,12 @@ interface VehilclesResponse extends MetaData {}
 
 interface StarshipsResponse extends MetaData {}
 
-export async function getPeople(): Promise<
-  ApiResponse<StarwarsPersons[]> | ApiResponse
-> {
+export async function getPeople(
+  params: QueryParams
+): Promise<ApiResponse<StarwarsPersons[]> | ApiResponse> {
   try {
-    const res = await axios.get<StarwarsPersonsResponse>(
-      `${SWAPI_BASE}/people`
-    );
+    const requestUrl = constructQuery("people", params);
+    const res = await axios.get<StarwarsPersonsResponse>(requestUrl);
 
     var response: StarwarsPersons[] = res.data.results?.map((person) => {
       return {

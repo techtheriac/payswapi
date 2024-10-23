@@ -4,3 +4,8 @@ export interface ApiResponse<T = void> {
   error?: { message: string };
   status: number;
 }
+
+export interface QueryParams {
+  search?: string;
+  page?: string;
+}

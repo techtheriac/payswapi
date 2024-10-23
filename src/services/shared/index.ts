@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
-import { ApiResponse } from "../../types";
-
+import { ApiResponse, QueryParams } from "../../types";
+const SWAPI_BASE = process.env.SWAPI_BASE || "https://swapi.dev/api";
 export interface MetaData {
   name: string;
 }
@@ -66,4 +66,26 @@ export function handleError(error: any): ApiResponse {
     error: { message: "an unexpected error occured whist processing request" },
     status: 500,
   };
+}
+
+export function constructQuery(
+  path: "planets" | "people",
+  params: QueryParams
+): string {
+  const reqBase = `${SWAPI_BASE}/${path}`;
+
+  const url = new URL(reqBase);
+
+  const peek = (prop: keyof typeof params) => {
+    return params[prop];
+  };
+
+  Object.keys(params).forEach((key) => {
+    const value = peek(key as keyof typeof params);
+    if (value !== undefined && value !== null && value !== "") {
+      url.searchParams.append(key, String(value));
+    }
+  });
+
+  return url.toString();
 }

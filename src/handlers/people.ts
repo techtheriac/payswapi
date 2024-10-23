@@ -1,8 +1,12 @@
 import { Request, Response } from "express";
 import { getPeople, getPeopleById } from "../services/peopleApiService";
+import { QueryParams } from "../types";
 
-export const getAllPersons = async (req: Request, res: Response) => {
-  const response = await getPeople();
+export const getAllPersons = async (
+  req: Request<{}, {}, {}, QueryParams>,
+  res: Response
+) => {
+  const response = await getPeople(req.query);
 
   if (!response.success) {
     res.status(response.status);

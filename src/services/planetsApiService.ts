@@ -1,6 +1,11 @@
 import axios from "axios";
-import { ApiResponse } from "../types";
-import { MetaData, getAdditionalProperties, handleError } from "./shared";
+import { ApiResponse, QueryParams } from "../types";
+import {
+  MetaData,
+  constructQuery,
+  getAdditionalProperties,
+  handleError,
+} from "./shared";
 const SWAPI_BASE = process.env.SWAPI_BASE || "https://swapi.dev/api";
 
 interface Planet {
@@ -28,11 +33,13 @@ interface FilmsResponse {
   title: string;
 }
 
-export async function getPlanets(): Promise<
-  ApiResponse<Planets[]> | ApiResponse
-> {
+export async function getPlanets(
+  params: QueryParams
+): Promise<ApiResponse<Planets[]> | ApiResponse> {
   try {
-    const res = await axios.get<PlanetsResponse>(`${SWAPI_BASE}/planets`);
+    const requestUrl = constructQuery("planets", params);
+    // const res = await axios.get<PlanetsResponse>(`${SWAPI_BASE}/planets`);
+    const res = await axios.get<PlanetsResponse>(requestUrl);
 
     var response: Planets[] = res.data?.results.map((planet) => {
       return {

@@ -1,8 +1,12 @@
 import { Request, Response } from "express";
 import { getPlanetById, getPlanets } from "../services/planetsApiService";
+import { QueryParams } from "../types";
 
-export const getAllPlanets = async (req: Request, res: Response) => {
-  const response = await getPlanets();
+export const getAllPlanets = async (
+  req: Request<{}, {}, {}, QueryParams>,
+  res: Response
+) => {
+  const response = await getPlanets(req.query);
 
   if (!response.success) {
     res.status(response.status);
