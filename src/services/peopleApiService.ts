@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ApiResponse, QueryParams } from "../types";
 import {
-  FilmsResponse,
+  FilmsResponse as FilmProps,
   MetaData,
   constructQuery,
   getAdditionalProperties,
@@ -30,11 +30,11 @@ interface StarwarsPersonsResponse {
   results: StarwarsPersons[];
 }
 
-interface HomeWorldResponse extends MetaData {}
+interface HomeWorldProps extends MetaData {}
 
-interface VehilclesResponse extends MetaData {}
+interface VehilcleProps extends MetaData {}
 
-interface StarshipsResponse extends MetaData {}
+interface StarshipProps extends MetaData {}
 
 export async function getPeople(
   params: QueryParams
@@ -79,16 +79,14 @@ export async function getPeopleById(
       };
     }
 
-    const homeworldResponse = getAdditionalProperties<HomeWorldResponse>([
+    const homeworldResponse = getAdditionalProperties<HomeWorldProps>([
       res.data.homeworld!,
     ]);
-    const vehiclesResponse = getAdditionalProperties<VehilclesResponse>(
+    const vehiclesResponse = getAdditionalProperties<VehilcleProps>(
       res.data.vehicles
     );
-    const filmsResponse = getAdditionalProperties<FilmsResponse>(
-      res.data.films
-    );
-    const starshipsResponse = getAdditionalProperties<StarshipsResponse>(
+    const filmsResponse = getAdditionalProperties<FilmProps>(res.data.films);
+    const starshipsResponse = getAdditionalProperties<StarshipProps>(
       res.data.starships
     );
 

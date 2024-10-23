@@ -28,8 +28,8 @@ interface PlanetsResponse {
   results: Planets[];
 }
 
-interface ResidentsResponse extends MetaData {}
-interface FilmsResponse {
+interface ResidentsProps extends MetaData {}
+interface FilmsProps {
   title: string;
 }
 
@@ -77,12 +77,10 @@ export async function getPlanetById(
       };
     }
 
-    const residentsResonse = getAdditionalProperties<ResidentsResponse>(
+    const residentsResonse = getAdditionalProperties<ResidentsProps>(
       res.data.residents
     );
-    const filmsResponse = getAdditionalProperties<FilmsResponse>(
-      res.data.films
-    );
+    const filmsResponse = getAdditionalProperties<FilmsProps>(res.data.films);
 
     const metaDataResponses = await Promise.all([
       residentsResonse,

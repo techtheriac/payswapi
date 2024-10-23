@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import router from "./router";
 import { rateLimit } from "express-rate-limit";
 import { apiReference } from "@scalar/express-api-reference";
@@ -38,6 +38,19 @@ app.get("/health", (req: Request, res: Response) => {
 
 app.get("/", (req: Request, res: Response) => {
   res.redirect("/reference");
+});
+
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  console.error(err.stack);
+  res.status(500).json({
+    message: err.message,
+  });
+});
+
+app.use((req: Request, res: Response) => {
+  res.status(404).json({
+    message: "Route not found",
+  });
 });
 
 export default app;
