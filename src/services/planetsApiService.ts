@@ -38,7 +38,6 @@ export async function getPlanets(
 ): Promise<ApiResponse<Planets[]> | ApiResponse> {
   try {
     const requestUrl = constructQuery("planets", params);
-    // const res = await axios.get<PlanetsResponse>(`${SWAPI_BASE}/planets`);
     const res = await axios.get<PlanetsResponse>(requestUrl);
 
     var response: Planets[] = res.data?.results.map((planet) => {

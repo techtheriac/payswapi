@@ -106,4 +106,29 @@ This application has been structured with easy navigability in mind so as to ens
    └── cache.ts
 ```
 
-Type annotations are heavily utilized to
+### Technology Stack
+
+- **TypeScript**: is being used for the enumerated reasons:
+
+  - **Improved Code Readability and Maintainability:**: Types serves as a form of in-line documentation, which is particularly helpful as your project grows or when new team members are onboarded.
+
+  - **Enhanced IDE Support**: TypeScript provides rich autocompletion, intelligent code navigation, and refactoring tools in modern IDEs like Visual Studio Code. This increases productivity and reduces debugging time.
+
+- **ExpressJs**: is the framework of choice in building this application for its:
+
+  - **Simplicity**: Express doesn’t enforce a particular structure or pattern, which gives you the flexibility to design your server application the way you want, especially in simple projects where you don’t need a full-fledged framework.
+
+  - **Middleware Ecosystem**: Express has a powerful middleware system that lets you easily add functionality to the server.
+
+  - **Community and Documentation**: Express has a large and active community, extensive documentation, and a wide array of third-party libraries and tools that make development faster and easier
+
+### Coding Style
+
+- **Functions vs Objects**: simple function are well favoured across codebase for easy composability and objects are used when state tracking is of great relevance as in the `cache` utility.
+
+- **Types**: Functions and relevant objects are annotated to ensure contractual consistency across codebase.
+
+### Performance considerations
+
+- **Caching**: A simple in-memory cache is being utilized and relevant routes have been enriched with it via a middleware
+- **Rate Limiting**: A rate limiter sits atop endpoints to curb misuse of resources
