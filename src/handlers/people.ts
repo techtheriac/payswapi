@@ -1,9 +1,6 @@
 import { Request, Response } from "express";
 import { getPeople, getPeopleById } from "../services/peopleApiService";
 
-const PERSONS_CACHE_KEY = "persons";
-const PERSON_CACHE_KEY = (id: string) => `person-${id}`;
-
 export const getAllPersons = async (req: Request, res: Response) => {
   const response = await getPeople();
 

@@ -20,6 +20,14 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Person"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: "#/components/schemas/Error"
   /api/people/:id:
     get:
       summary: Get one PaySwapi person by Id
@@ -30,9 +38,49 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: "#/components/schemas/Person"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/planets:
+    get:
+      summary: Gets all planets in the PaySwapi Universe.
+      description: Retrieves all planets in the PaySwapi Universe.
+      responses:
+        "200":
+          description: All PaySwapi planets
+          content:
+            application/json:
+              schema:
+                type: array
                 items:
-                  $ref: "#/components/schemas/Person"
+                  $ref: "#/components/schemas/Planet"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/planets/:id:
+    get:
+      summary: Get one planet from the PaySwapi universe
+      description: Retrieves one planet from the PaySwapi universe
+      responses:
+        "200":
+          description: One PaySwapi planet
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Planet"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 components:
   schemas:
     Person:
@@ -60,6 +108,7 @@ components:
           type: array
           items:
             type: string
+          example: ["gogo", "halal"]
         mass:
           type: string
           example: 89
@@ -103,7 +152,17 @@ components:
           type: array
           items:
             type: string
+          example: ["Nachi", "Delim"]
         residents:
           type: array
           items:
             type: string
+          example:
+            - Lance
+            - Skywalker
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Request failed with status code 404
