@@ -78,3 +78,32 @@ npm install
 ```sh
 npm run test
 ```
+
+## Application Design
+
+### Structure
+
+This application has been structured with easy navigability in mind so as to ensure that maintenance does not tilt towards a nightmare. Hence, related concerns are colocated in disparate folders as shown below:
+
+```sh
+├── __tests__
+|  └── handlers
+├── handlers
+|  ├── people.ts
+|  └── planets.ts
+├── index.ts
+├── middlewares
+|  └── cache.ts
+├── openapi.yaml
+├── router.ts
+├── server.ts
+├── services
+|  ├── peopleApiService.ts
+|  ├── planetsApiService.ts
+|  └── shared
+├── types.ts
+└── utils
+   └── cache.ts
+```
+
+Type annotations are heavily utilized to
