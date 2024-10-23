@@ -1,5 +1,5 @@
-import { requestStub, responseStub } from "./people/__stubs__";
-import { getAllPlanets, getOnePlanet } from "../../handlers/planets";
+import { requestStub, responseStub } from "../people/__stubs__";
+import { getAllPlanets, getOnePlanet } from "../../../handlers/planets";
 
 describe("getAllPersons", () => {
   it("should return a list of planets", async () => {

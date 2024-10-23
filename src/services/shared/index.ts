@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { ApiResponse } from "../../types";
 
 export interface MetaData {
@@ -10,7 +10,7 @@ export interface FilmsResponse {
 }
 export async function getMetaData<T>(
   paths?: string[]
-): Promise<ApiResponse<T[]>> {
+): Promise<ApiResponse<T[]> | ApiResponse> {
   try {
     if (!paths) {
       return {
@@ -30,22 +30,32 @@ export async function getMetaData<T>(
       status: 200,
     };
   } catch (error) {
-    console.error(error);
+    return handleError(error);
+  }
+}
 
-    if (error instanceof Error) {
+export function handleError(error: any): ApiResponse {
+  if (error instanceof AxiosError) {
+    if (error?.response) {
       return {
         success: false,
-        error: { message: error.message },
-        status: 500,
+        status: error.response.status,
+        error: { message: error.response.data?.detail },
       };
     }
 
-    return {
-      success: false,
-      error: {
-        message: "an unexpected error occured whilst retrieving people",
-      },
-      status: 500,
-    };
+    if (error?.request) {
+      return {
+        success: false,
+        status: 400,
+        error: { message: `Error processing request: ${error?.request}` },
+      };
+    }
   }
+
+  return {
+    success: false,
+    error: { message: "an unexpected error occured whist processing request" },
+    status: 500,
+  };
 }

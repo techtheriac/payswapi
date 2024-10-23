@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ApiResponse } from "../types";
-import { FilmsResponse, MetaData, getMetaData } from "./shared";
+import { FilmsResponse, MetaData, getMetaData, handleError } from "./shared";
 const SWAPI_BASE = process.env.SWAPI_BASE || "https://swapi.dev/api";
 
 interface StarwarsPerson {
@@ -30,7 +30,9 @@ interface VehilclesResponse extends MetaData {}
 
 interface StarshipsResponse extends MetaData {}
 
-export async function getPeople(): Promise<ApiResponse<StarwarsPersons[]>> {
+export async function getPeople(): Promise<
+  ApiResponse<StarwarsPersons[]> | ApiResponse
+> {
   try {
     const res = await axios.get<StarwarsPersonsResponse>(
       `${SWAPI_BASE}/people`
@@ -55,29 +57,13 @@ export async function getPeople(): Promise<ApiResponse<StarwarsPersons[]>> {
       status: res.status,
     };
   } catch (error) {
-    console.error(error);
-
-    if (error instanceof Error) {
-      return {
-        success: false,
-        error: { message: error.message },
-        status: 500,
-      };
-    }
-
-    return {
-      success: false,
-      error: {
-        message: "an unexpected error occured whilst retrieving people",
-      },
-      status: 500,
-    };
+    return handleError(error);
   }
 }
 
 export async function getPeopleById(
   id: string
-): Promise<ApiResponse<StarwarsPerson>> {
+): Promise<ApiResponse<StarwarsPerson> | ApiResponse> {
   try {
     const res = await axios.get<StarwarsPerson>(`${SWAPI_BASE}/people/${id}`);
 
@@ -138,22 +124,6 @@ export async function getPeopleById(
       status: 200,
     };
   } catch (error) {
-    console.error(error);
-
-    if (error instanceof Error) {
-      return {
-        success: false,
-        error: { message: error.message },
-        status: 500,
-      };
-    }
-
-    return {
-      success: false,
-      error: {
-        message: "an unexpected error occured whilst retrieving people",
-      },
-      status: 500,
-    };
+    return handleError(error);
   }
 }

@@ -11,6 +11,14 @@ paths:
     get:
       summary: Get all PaySwapi People
       description: Retrieve a list folks existing in the PaySwapi universe.
+      parameters:
+        - name: search
+          in: query
+          description: Search term to filter characters (e.g., name or other attributes).
+          required: false
+          schema:
+            type: string
+          example: r2
       responses:
         "200":
           description: List of PaySwapis
@@ -49,6 +57,14 @@ paths:
     get:
       summary: Gets all planets in the PaySwapi Universe.
       description: Retrieves all planets in the PaySwapi Universe.
+      parameters:
+        - name: search
+          in: query
+          description: Search term to filter planets (e.g., name or other attributes).
+          required: false
+          schema:
+            type: string
+          example: hiaku
       responses:
         "200":
           description: All PaySwapi planets
