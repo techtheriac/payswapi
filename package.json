@@ -4,13 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc && npm run copy-static && npm run copy-yaml",
+    "build": "tsc && npm run copy-yaml",
     "start:dev": "nodemon src/index.ts",
     "start:prod": "node dist/index",
     "start": "npm run start:prod",
     "dev": "npm run start:dev",
     "test": "jest",
-    "copy-static": "copyfiles -u 1 src/**/* dist/",
     "copy-yaml": "copyfiles -u 1 src/*.yaml dist/"
   },
   "author": "",

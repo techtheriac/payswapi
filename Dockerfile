@@ -4,7 +4,7 @@ ENV SWAPI_BASE=https://swapi.dev/api
 
 WORKDIR /usr/src/app
 
-COPY ["package.json", "package-lock.json*", "./"]
+COPY ["package.json", "package-lock.json*", "*.yaml", "./"]
 
 RUN npm install && mv node_modules ../
 
