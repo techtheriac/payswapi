@@ -3,6 +3,7 @@ import { ApiResponse, QueryParams } from "../types";
 import {
   MetaData,
   PaginatedApiResponse,
+  PaginatedResponseViewModel,
   constructQuery,
   getAdditionalProperties,
   handleError,
@@ -36,12 +37,12 @@ interface FilmsProps {
 
 export async function getPlanets(
   params: QueryParams
-): Promise<ApiResponse<Planets[]> | ApiResponse> {
+): Promise<ApiResponse<PaginatedResponseViewModel<Planets>> | ApiResponse> {
   try {
     const requestUrl = constructQuery("planets", params);
     const res = await axios.get<PlanetsResponse>(requestUrl);
 
-    var response: Planets[] = res.data?.results.map((planet) => {
+    var results: Planets[] = res.data?.results.map((planet) => {
       return {
         climate: planet.climate,
         diameter: planet.diameter,
@@ -54,6 +55,19 @@ export async function getPlanets(
         terrain: planet.terrain,
       };
     });
+
+    let hasNextPage: boolean = false;
+    let hasPreviousPage: boolean = false;
+
+    if (res.data.next) hasNextPage = true;
+    if (res.data.previous) hasPreviousPage = true;
+
+    const response: PaginatedResponseViewModel<Planets> = {
+      hasNextPage,
+      hasPreviousPage,
+      total: res.data.count,
+      results,
+    };
 
     return {
       response,
