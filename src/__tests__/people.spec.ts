@@ -1,55 +1,148 @@
 import { getAllPersons, getOnePerson } from "../handlers/people";
 import { Request, Response } from "express";
-import { QueryParams } from "../types";
-import { getPeople } from "../services/peopleApiService";
-
-export const requestStub = {
-  query: {
-    search: "",
-    page: "",
-  } as QueryParams,
-} as Request;
-export const responseStub = {
-  json: jest.fn(),
-  status: jest.fn(),
-} as unknown as Response;
+import { ApiResponse, QueryParams } from "../types";
+import {
+  StarwarsPerson,
+  StarwarsPersons,
+  getPeople,
+  getPeopleById,
+} from "../services/peopleApiService";
+import { PaginatedResponseViewModel } from "../services/shared";
 
 jest.mock("../services/peopleApiService.ts", () => ({
-  getPeople: jest.fn(({}) => {
-    return {
-      success: true,
-      status: 200,
-      response: [],
-    };
-  }),
-
-  getPeopleById: jest.fn((id) => {
-    return {
-      success: true,
-      status: 200,
-      response: {},
-    };
-  }),
+  getPeople: jest.fn(),
+  getPeopleById: jest.fn(),
 }));
 
-describe("getAllPersons", () => {
+describe("getAllPersons handler", () => {
+  let requestStub: Partial<Request>;
+  let responseStub: Partial<Response>;
+
+  beforeEach(() => {
+    requestStub = {
+      query: {
+        search: "",
+        page: "",
+      },
+    };
+
+    responseStub = {
+      json: jest.fn(),
+      status: jest.fn(),
+    };
+
+    jest.clearAllMocks();
+  });
+
   it("should return a list of people", async () => {
-    await getAllPersons(requestStub, responseStub);
+    const successResponseStub = {
+      success: true,
+      status: 200,
+      response: {} as PaginatedResponseViewModel<StarwarsPersons>,
+    };
+
+    const getPeopleMocked = getPeople as jest.MockedFunction<typeof getPeople>;
+    getPeopleMocked.mockResolvedValueOnce(successResponseStub);
+
+    // ACT
+    await getAllPersons(requestStub as Request, responseStub as Response);
+
+    // ASSERT
     expect(responseStub.json).toHaveBeenCalled();
     expect(responseStub.json).toHaveBeenCalledTimes(1);
-    expect(responseStub.json).toHaveBeenCalledWith([]);
+    expect(responseStub.json).toHaveBeenCalledWith({});
+    expect(responseStub.status).not.toHaveBeenCalled();
+  });
+
+  it("should return appropriate error response and status codes on failure", async () => {
+    const errorResponseStub = {
+      success: false,
+      status: 500,
+      error: {
+        message: "an unexpected error occured whist processing request",
+      },
+    };
+
+    const getPeopleMocked = getPeople as jest.MockedFunction<typeof getPeople>;
+    getPeopleMocked.mockResolvedValueOnce(errorResponseStub);
+
+    // ACT
+    await getAllPersons(requestStub as Request, responseStub as Response);
+
+    // ASSERT
+    expect(responseStub.json).toHaveBeenCalled();
+    expect(responseStub.json).toHaveBeenCalledTimes(1);
+    expect(responseStub.json).toHaveBeenCalledWith({
+      message: "an unexpected error occured whist processing request",
+    });
+    expect(responseStub.status).toHaveBeenCalled();
+    expect(responseStub.status).toHaveBeenCalledWith(500);
   });
 });
 
-describe("getOnePerson", () => {
-  const requestStub = {
-    params: {
-      id: 1,
-    },
-  } as unknown as Request;
+describe("getOnePerson handler", () => {
+  let requestStub: Partial<Request>;
+  let responseStub: Partial<Response>;
 
-  it("should return one ", async () => {
-    await getOnePerson(requestStub, responseStub);
+  beforeEach(() => {
+    requestStub = {
+      params: {
+        id: "1",
+      },
+    };
+
+    responseStub = {
+      json: jest.fn(),
+      status: jest.fn(),
+    };
+
+    jest.clearAllMocks();
+  });
+
+  it("should return one person with appropriate response code", async () => {
+    // ARRANGE
+    const successResponseStub = {
+      success: true,
+      status: 200,
+      response: {} as StarwarsPerson,
+    };
+
+    const getPeopleByIdMocked = getPeopleById as jest.MockedFunction<
+      typeof getPeopleById
+    >;
+    getPeopleByIdMocked.mockResolvedValueOnce(successResponseStub);
+    // ACT
+    await getOnePerson(requestStub as Request, responseStub as Response);
+
+    //ASSERT
+    expect(getPeopleByIdMocked).toHaveBeenCalledWith("1");
     expect(responseStub.json).toHaveBeenCalled();
+    expect(responseStub.json).toHaveBeenCalledWith(
+      successResponseStub.response
+    );
+    expect(responseStub.status).not.toHaveBeenCalled();
+  });
+
+  it("should return appropriate error response & status code for failures", async () => {
+    // ARRANGE
+    const errorResponseStub = {
+      success: false,
+      status: 404,
+      error: { message: "Not found" },
+    };
+
+    const getPeopleByIdMocked = getPeopleById as jest.MockedFunction<
+      typeof getPeopleById
+    >;
+    getPeopleByIdMocked.mockResolvedValueOnce(errorResponseStub);
+
+    // ACT
+    await getOnePerson(requestStub as Request, responseStub as Response);
+
+    // ASSERT
+    expect(getPeopleByIdMocked).toHaveBeenCalledWith("1");
+    expect(responseStub.json).toHaveBeenCalled();
+    expect(responseStub.json).toHaveBeenCalledWith({ message: "Not found" });
+    expect(responseStub.status).toHaveBeenCalledWith(404);
   });
 });

@@ -8,7 +8,7 @@ PaySwapi is a collection of API endpoints to retrieve `pepole` and `planets` in 
 
 To run locally, you first need to clone and install the project with Node.js and npm, and it will need to be a newer version like `node@18.17.0` or higher. You can download Node.js and npm [here](https://nodejs.org) or preferably through a version manager like [Volta ⚡](https://volta.sh/).
 
-#### 1. In a terminal, run the following from your desired directory:
+#### 1. In a terminal, run the following commands from your desired directory:
 
 ```sh
 git clone git@github.com:techtheriac/payswapi.git
@@ -22,12 +22,6 @@ npm install
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 #### 3. Launch application
@@ -110,7 +104,7 @@ This application has been structured with easy navigability in mind so as to ens
 
 - **TypeScript**: is being used for the enumerated reasons:
 
-  - **Improved Code Readability and Maintainability:**: Types serves as a form of in-line documentation, which is particularly helpful as your project grows or when new team members are onboarded.
+  - **Improved Code Readability and Maintainability**: Types serves as a form of in-line documentation, which is particularly helpful as this project grows or when new maintainers are onboarded.
 
   - **Enhanced IDE Support**: TypeScript provides rich autocompletion, intelligent code navigation, and refactoring tools in modern IDEs like Visual Studio Code. This increases productivity and reduces debugging time.
 

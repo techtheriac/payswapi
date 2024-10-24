@@ -11,7 +11,7 @@ import {
 } from "./shared";
 const SWAPI_BASE = process.env.SWAPI_BASE || "https://swapi.dev/api";
 
-interface StarwarsPerson {
+export interface StarwarsPerson {
   name: string;
   height: string;
   mass: string;
@@ -26,7 +26,10 @@ interface StarwarsPerson {
   starships?: string[];
 }
 
-type StarwarsPersons = Omit<StarwarsPerson, "homeworld" | "films" | "vehicles">;
+export type StarwarsPersons = Omit<
+  StarwarsPerson,
+  "homeworld" | "films" | "vehicles"
+>;
 
 interface StarwarsPersonsResponse extends PaginatedApiResponse {
   results: StarwarsPersons[];
