@@ -32,9 +32,21 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Person"
+                type: object
+                properties:
+                  hasNextPage:
+                    type: boolean
+                    example: true
+                  hasPreviousPage:
+                    type: boolean
+                    example: true
+                  total:
+                    type: integer
+                    example: 20
+                  results:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Person"
         "500":
           description: Internal Server Error
           content:
