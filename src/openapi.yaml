@@ -55,10 +55,16 @@ paths:
                 type: object
                 items:
                   $ref: "#/components/schemas/Error"
-  /api/people/:id:
+  /api/people/{id}:
     get:
       summary: Get one PaySwapi person by Id
       description: Retrieves a single folk from the PaySwapi universe.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: One PaySwapi folk
@@ -118,10 +124,16 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /api/planets/:id:
+  /api/planets/{id}:
     get:
       summary: Get one planet from the PaySwapi universe
       description: Retrieves one planet from the PaySwapi universe
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: One PaySwapi planet

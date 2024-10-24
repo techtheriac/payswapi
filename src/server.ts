@@ -1,7 +1,8 @@
 import express, { Request, Response, NextFunction } from "express";
 import router from "./router";
 import { rateLimit } from "express-rate-limit";
-import { apiReference } from "@scalar/express-api-reference";
+// import { apiReference } from "@scalar/express-api-reference";
+import swaggerUi from "swagger-ui-express";
 import YAML from "yamljs";
 import path from "path";
 import { handleCache } from "./middlewares/cache";
@@ -21,14 +22,7 @@ const limiter = rateLimit({
 
 app.use(limiter);
 
-app.use(
-  "/reference",
-  apiReference({
-    spec: {
-      content: spec,
-    },
-  })
-);
+app.use("/reference", swaggerUi.serve, swaggerUi.setup(spec));
 
 app.use("/api", handleCache, router);
 
