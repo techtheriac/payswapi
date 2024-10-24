@@ -10,7 +10,7 @@ import {
 } from "./shared";
 const SWAPI_BASE = process.env.SWAPI_BASE || "https://swapi.dev/api";
 
-interface Planet {
+export interface Planet {
   name: string;
   rotation_period: string;
   orbital_period: string;
@@ -24,7 +24,7 @@ interface Planet {
   films?: string[];
 }
 
-type Planets = Omit<Planet, "residents" | "films">;
+export type Planets = Omit<Planet, "residents" | "films">;
 
 interface PlanetsResponse extends PaginatedApiResponse {
   results: Planets[];

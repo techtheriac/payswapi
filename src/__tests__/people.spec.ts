@@ -1,6 +1,5 @@
 import { getAllPersons, getOnePerson } from "../handlers/people";
 import { Request, Response } from "express";
-import { ApiResponse, QueryParams } from "../types";
 import {
   StarwarsPerson,
   StarwarsPersons,

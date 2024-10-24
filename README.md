@@ -118,7 +118,7 @@ This application has been structured with easy navigability in mind so as to ens
 
 ### Coding Style
 
-- **Functions vs Objects**: simple function are well favoured across codebase for easy composability and objects are used when state tracking is of great relevance as in the `cache` utility.
+- **Functions vs Objects**: simple function are well favoured across codebase for easy composability and, objects are preferred where state encapsulation is of great relevance as in the `cache` utility.
 
 - **Types**: Functions and relevant objects are annotated to ensure contractual consistency across codebase.
 
