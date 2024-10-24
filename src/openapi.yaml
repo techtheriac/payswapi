@@ -10,7 +10,7 @@ paths:
   /api/people:
     get:
       summary: Get all PaySwapi People
-      description: Retrieve a list folks existing in the PaySwapi universe.
+      description: Retrieves a paginated list folks existing in the PaySwapi universe.
       parameters:
         - name: search
           in: query
