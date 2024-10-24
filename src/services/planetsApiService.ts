@@ -2,6 +2,7 @@ import axios from "axios";
 import { ApiResponse, QueryParams } from "../types";
 import {
   MetaData,
+  PaginatedApiResponse,
   constructQuery,
   getAdditionalProperties,
   handleError,
@@ -24,7 +25,7 @@ interface Planet {
 
 type Planets = Omit<Planet, "residents" | "films">;
 
-interface PlanetsResponse {
+interface PlanetsResponse extends PaginatedApiResponse {
   results: Planets[];
 }
 

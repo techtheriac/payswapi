@@ -3,6 +3,8 @@ import { ApiResponse, QueryParams } from "../types";
 import {
   FilmsResponse as FilmProps,
   MetaData,
+  PaginatedApiResponse,
+  PaginatedResponseViewModel,
   constructQuery,
   getAdditionalProperties,
   handleError,
@@ -26,7 +28,7 @@ interface StarwarsPerson {
 
 type StarwarsPersons = Omit<StarwarsPerson, "homeworld" | "films" | "vehicles">;
 
-interface StarwarsPersonsResponse {
+interface StarwarsPersonsResponse extends PaginatedApiResponse {
   results: StarwarsPersons[];
 }
 
@@ -38,12 +40,14 @@ interface StarshipProps extends MetaData {}
 
 export async function getPeople(
   params: QueryParams
-): Promise<ApiResponse<StarwarsPersons[]> | ApiResponse> {
+): Promise<
+  ApiResponse<PaginatedResponseViewModel<StarwarsPersons>> | ApiResponse
+> {
   try {
     const requestUrl = constructQuery("people", params);
     const res = await axios.get<StarwarsPersonsResponse>(requestUrl);
 
-    var response: StarwarsPersons[] = res.data.results?.map((person) => {
+    const results: StarwarsPersons[] = res.data.results?.map((person) => {
       return {
         name: person.name,
         birth_year: person.birth_year,
@@ -55,6 +59,19 @@ export async function getPeople(
         skin_color: person.skin_color,
       };
     });
+
+    let hasNextPage: boolean = false;
+    let hasPreviousPage: boolean = false;
+
+    if (res.data.next) hasNextPage = true;
+    if (res.data.previous) hasPreviousPage = true;
+
+    const response: PaginatedResponseViewModel<StarwarsPersons> = {
+      hasNextPage,
+      hasPreviousPage,
+      total: res.data.count,
+      results,
+    };
 
     return {
       success: true,

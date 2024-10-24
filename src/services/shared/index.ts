@@ -5,6 +5,22 @@ export interface MetaData {
   name: string;
 }
 
+export interface PaginatedApiResponse {
+  count: number;
+  next: string;
+  previous: string;
+}
+
+export interface PaginatedResponse {
+  total: number;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+}
+
+export interface PaginatedResponseViewModel<T> extends PaginatedResponse {
+  results: T[];
+}
+
 export interface FilmsResponse {
   title: string;
 }
