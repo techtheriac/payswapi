@@ -14,12 +14,12 @@ describe("cache implementation", () => {
     expect(cache.get("jesus")).toBe(null);
   });
 
-  it("should fail to retrieve item(s) when cache is cleared", () => {
+  it("should fail to retrieve values when cache is cleared", () => {
     const cache = new Cache();
     cache.set("jesus", "is lord");
-    cache.set("life", "is awesome");
+    cache.set("suit", "yourself");
     cache.clear();
     expect(cache.get("jesus")).toBe(null);
-    expect(cache.get("life")).toBe(null);
+    expect(cache.get("suit")).toBe(null);
   });
 });
