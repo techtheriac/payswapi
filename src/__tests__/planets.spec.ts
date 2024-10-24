@@ -1,7 +1,6 @@
-import { getAllPersons, getOnePerson } from "../handlers/people";
 import { Request, Response } from "express";
+import { getOnePlanet, getAllPlanets } from "../handlers/planets";
 import { QueryParams } from "../types";
-import { getPeople } from "../services/peopleApiService";
 
 export const requestStub = {
   query: {
@@ -14,8 +13,8 @@ export const responseStub = {
   status: jest.fn(),
 } as unknown as Response;
 
-jest.mock("../services/peopleApiService.ts", () => ({
-  getPeople: jest.fn(({}) => {
+jest.mock("../services/planetsApiService.ts", () => ({
+  getPlanets: jest.fn(({}) => {
     return {
       success: true,
       status: 200,
@@ -23,7 +22,7 @@ jest.mock("../services/peopleApiService.ts", () => ({
     };
   }),
 
-  getPeopleById: jest.fn((id) => {
+  getPlanetById: jest.fn((id) => {
     return {
       success: true,
       status: 200,
@@ -32,24 +31,23 @@ jest.mock("../services/peopleApiService.ts", () => ({
   }),
 }));
 
-describe("getAllPersons", () => {
-  it("should return a list of people", async () => {
-    await getAllPersons(requestStub, responseStub);
+describe("getAllPlanets", () => {
+  it("should return a list of planets", async () => {
+    await getAllPlanets(requestStub, responseStub);
     expect(responseStub.json).toHaveBeenCalled();
     expect(responseStub.json).toHaveBeenCalledTimes(1);
     expect(responseStub.json).toHaveBeenCalledWith([]);
   });
 });
 
-describe("getOnePerson", () => {
+describe("getOnePlanet", () => {
   const requestStub = {
     params: {
       id: 1,
     },
   } as unknown as Request;
-
-  it("should return one ", async () => {
-    await getOnePerson(requestStub, responseStub);
+  it("should return one planet", async () => {
+    await getOnePlanet(requestStub, responseStub);
     expect(responseStub.json).toHaveBeenCalled();
   });
 });
